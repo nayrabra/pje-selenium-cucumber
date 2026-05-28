@@ -1,0 +1,11 @@
+credenciais-login.properties
+target/
+
+.classpath
+.project
+.settings/
+
+.DS_Store
+
+bin/
+.metadata/
