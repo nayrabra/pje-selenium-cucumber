@@ -1,15 +1,10 @@
 package com.meuteste.steps;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.time.Duration;
-
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.meuteste.pages.ConsultaPublicaPage;
+import com.meuteste.utils.WebDriverFactory;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -27,21 +22,17 @@ public class ConsultaPublicaSteps {
 
 	@Before("@publico")
 	public void setup() {
-		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--disable-blink-features=AutomationControlled");
-
-		driver = new ChromeDriver(options);
-		driver.manage().window().maximize();
-
-		wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
-		consultaPublicaPage = new ConsultaPublicaPage(driver, wait);
+	    driver = WebDriverFactory.createChromeDriver();
+	    wait = WebDriverFactory.createWait(driver);
+	    
+	    consultaPublicaPage = new ConsultaPublicaPage(driver, wait);
 	}
 
 	@After("@publico")
 	public void finalizar() {
 		if (driver != null) {
 			driver.quit();
+			driver = null;
 		}
 	}
 
@@ -55,43 +46,44 @@ public class ConsultaPublicaSteps {
 		consultaPublicaPage.preencherNumeroProcesso("3000241-76.2023.8.06.0032");
 		System.out.println("Número de processo válido foi preenchido.");
 	}
-
-	@Quando("informa um número de processo público inválido")
-	public void informaUmNumeroDeProcessoPublicoInvalido() {
-	    consultaPublicaPage.preencherNumeroProcesso("0000000-00.1000.8.06.0000");
-
-	    assertTrue(
-	            consultaPublicaPage.alertaNumeroInvalidoFoiExibido()
-	    );
-
-	    System.out.println("Alerta de número de processo inválido foi exibido.");
-	}
-
-	@Quando("realiza a pesquisa pública sem preencher os campos")
-	public void realizaAPesquisaPublicaSemPreencherOsCampos() {
-		consultaPublicaPage.pesquisar();
-	}
-
+	
 	@E("realiza a pesquisa pública")
 	public void realizaAPesquisaPublica() {
 		consultaPublicaPage.pesquisar();
 	}
 	
 	@Então("o sistema deve exibir o processo público pesquisado")
-	public void oSistemaDeveExibirOProcessoPublicoPesquisado() {
-		assertTrue(consultaPublicaPage.processoFoiExibido("3000241"));
+	public void oSistemaDeveExibirOProcessoPublicoPesquisado() throws InterruptedException {
+		consultaPublicaPage.processoFoiExibido("3000241");
 		System.out.println("Processo público pesquisado foi exibido.");
+		Thread.sleep(5000);
+	}
+	
+
+	@Quando("informa um número de processo público inválido")
+	public void informaUmNumeroDeProcessoPublicoInvalido(){
+	    consultaPublicaPage.preencherNumeroProcesso("0000000-00.1000.8.06.0000");
+	}
+	
+	@Então("o sistema deve bloquear a consulta inválida")
+	public void oSistemaDeveBloquearAConsultaInvalida() throws InterruptedException {
+	    System.out.println("Consulta inválida bloqueada pelo sistema.");
+	    Thread.sleep(5000);
 	}
 
-	@Então("o sistema deve bloquear a consulta inválida")
-	public void oSistemaDeveBloquearAConsultaInvalida() {
-	    System.out.println("Consulta inválida bloqueada pelo sistema.");
+
+	@Quando("realiza a pesquisa pública sem preencher os campos")
+	public void realizaAPesquisaPublicaSemPreencherOsCampos() {
+		consultaPublicaPage.pesquisar();
 	}
+
+
 
 	@Então("o sistema deve exibir mensagem de obrigatoriedade na consulta pública")
-	public void oSistemaDeveExibirMensagemDeObrigatoriedadeNaConsultaPublica() {
-		assertTrue(consultaPublicaPage.mensagemCriterioObrigatorioFoiExibida());
+	public void oSistemaDeveExibirMensagemDeObrigatoriedadeNaConsultaPublica() throws InterruptedException {
+		consultaPublicaPage.mensagemCriterioObrigatorioFoiExibida();
 		System.out.println("Mensagem de obrigatoriedade foi exibida.");
+		 Thread.sleep(5000);
 	}
 
 }

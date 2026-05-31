@@ -2,17 +2,14 @@ package com.meuteste.steps;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.Duration;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.meuteste.pages.ConsultaAutenticadaPage;
 import com.meuteste.pages.LoginPage;
+import com.meuteste.utils.WebDriverFactory;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -31,13 +28,8 @@ public class ConsultaAutenticadaSteps {
 
     @Before("@autenticado")
     public void setup() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-blink-features=AutomationControlled");
-
-        driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
-
-        wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+    	driver = WebDriverFactory.createChromeDriver();
+  	    wait = WebDriverFactory.createWait(driver);
 
         loginPage = new LoginPage(driver);
         consultaProcessoPage = new ConsultaAutenticadaPage(driver, wait);
@@ -47,6 +39,7 @@ public class ConsultaAutenticadaSteps {
     public void finalizar() {
         if (driver != null) {
             driver.quit();
+            driver = null;
         }
     }
 

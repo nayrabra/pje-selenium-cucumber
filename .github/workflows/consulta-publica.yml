@@ -1,0 +1,30 @@
+name: Consulta Publica PJe
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  testes:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout do projeto
+        uses: actions/checkout@v4
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Executar testes
+        run: mvn clean test -Dheadless=true
