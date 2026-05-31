@@ -1,5 +1,10 @@
 # Selenium Automation - PJe TJCE
 
+![Java](https://img.shields.io/badge/Java-17-blue)
+![Selenium](https://img.shields.io/badge/Selenium-4-green)
+![Cucumber](https://img.shields.io/badge/Cucumber-BDD-brightgreen)
+![CI](https://github.com/nayrabra/pje-selenium-cucumber/actions/workflows/consulta-publica.yml/badge.svg)
+
 Projeto de automação de testes web utilizando **Selenium WebDriver + Java + Cucumber + JUnit 5**, com foco na validação de fluxos do sistema **PJe TJCE**.
 
 O projeto foi estruturado utilizando o padrão **Page Object Model (POM)**, separando páginas, steps e runners para facilitar a manutenção, reutilização e organização dos testes.
@@ -8,19 +13,27 @@ O projeto foi estruturado utilizando o padrão **Page Object Model (POM)**, sepa
 
 ## Tecnologias utilizadas
 
-* Java 17
-* Selenium WebDriver
-* Cucumber
-* Gherkin
-* JUnit 5
-* Maven
-* ChromeDriver
+* Linguagem de Programação: Java 17
+
+* Automação de Web: Selenium WebDriver & ChromeDriver
+
+* Abordagem BDD (Behavior-Driven Development) com Cucumber e Gherkin para escrita dos cenários de teste
+
+* Framework de Testes / Runner: JUnit 5
+
+* Gerenciador de Dependências e Build: Maven
+
+* Integração Contínua (CI/CD): GitHub Actions
 
 ---
 
 ## Estrutura do projeto
 
 ```bash
+.github
+└── workflows
+    └── consulta-publica.yml
+
 src/test/java
 ├── com.meuteste.pages
 │   ├── LoginPage.java
@@ -128,15 +141,23 @@ Foi utilizada uma pausa controlada via `Scanner` para permitir a inserção manu
 
 ---
 
-## CI/CD
+## Integração Contínua (CI/CD)
 
-A pipeline de integração contínua ainda não foi implementada neste projeto.
+O projeto utiliza GitHub Actions para execução automatizada dos testes de consulta pública.
 
-A proposta futura é:
+A pipeline é acionada automaticamente a cada:
 
-* utilizar GitHub Actions e/ou Jenkins;
-* executar automaticamente apenas os cenários públicos (`@publico`);
-* manter os cenários autenticados fora da pipeline devido ao MFA/2FA.
+* Push para a branch principal;
+* Pull Request direcionado para a branch principal.
+
+Atualmente, a pipeline executa apenas os cenários da funcionalidade de consulta pública (@publico), pois os cenários autenticados dependem de autenticação MFA/2FA e exigem interação manual.
+
+Benefícios da pipeline implementada:
+
+* Execução automática dos testes;
+* Validação contínua da aplicação;
+* Detecção antecipada de falhas;
+* Maior confiabilidade nas alterações do projeto.
 
 ---
 
@@ -150,5 +171,6 @@ Este projeto foi desenvolvido com foco em estudos e evolução prática em:
 * BDD;
 * boas práticas de automação;
 * organização de testes E2E.
+* integração Contínua (CI/CD) com GitHub Actions;
 
 ---
