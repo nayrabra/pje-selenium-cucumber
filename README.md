@@ -50,6 +50,7 @@ src/test/java
 │
 └── com.meuteste.utils
     └── Credenciais.java
+    └── WebDriverFactory.java
 
 src/test/resources
 └── features
