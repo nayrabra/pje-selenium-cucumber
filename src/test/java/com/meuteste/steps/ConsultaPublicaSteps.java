@@ -53,10 +53,10 @@ public class ConsultaPublicaSteps {
 	}
 	
 	@Então("o sistema deve exibir o processo público pesquisado")
-	public void oSistemaDeveExibirOProcessoPublicoPesquisado() throws InterruptedException {
+	public void oSistemaDeveExibirOProcessoPublicoPesquisado() {
 		consultaPublicaPage.processoFoiExibido("3000241");
 		System.out.println("Processo público pesquisado foi exibido.");
-		Thread.sleep(5000);
+		
 	}
 	
 
@@ -66,9 +66,9 @@ public class ConsultaPublicaSteps {
 	}
 	
 	@Então("o sistema deve bloquear a consulta inválida")
-	public void oSistemaDeveBloquearAConsultaInvalida() throws InterruptedException {
+	public void oSistemaDeveBloquearAConsultaInvalida() {
 	    System.out.println("Consulta inválida bloqueada pelo sistema.");
-	    Thread.sleep(5000);
+	   
 	}
 
 
@@ -80,10 +80,10 @@ public class ConsultaPublicaSteps {
 
 
 	@Então("o sistema deve exibir mensagem de obrigatoriedade na consulta pública")
-	public void oSistemaDeveExibirMensagemDeObrigatoriedadeNaConsultaPublica() throws InterruptedException {
+	public void oSistemaDeveExibirMensagemDeObrigatoriedadeNaConsultaPublica() {
 		consultaPublicaPage.mensagemCriterioObrigatorioFoiExibida();
 		System.out.println("Mensagem de obrigatoriedade foi exibida.");
-		 Thread.sleep(5000);
+		
 	}
 
 }
